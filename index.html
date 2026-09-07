@@ -1,0 +1,2560 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ubaid | Frontend Developer</title>
+  <meta name="description" content="Ubaid is a Frontend Developer focused on building modern, responsive and engaging web experiences.">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Ubaid | Frontend Developer">
+  <meta property="og:description" content="Ubaid is a Frontend Developer focused on building modern, responsive and engaging web experiences.">
+  <meta property="og:type" content="website">
+
+  <!-- Typography: Syne (Headings) & Plus Jakarta Sans (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================
+       1. VARIABLES & RESET
+       ========================================== */
+    :root {
+      --bg-main: #F7F6F2;
+      --bg-card: #FFFFFF;
+      --bg-subtle: #EFECE6;
+      --text-main: #0F1115;
+      --text-muted: #5A5E6B;
+      --text-light: #8C909E;
+      
+      /* Vibrant Studio Accent: Electric Indigo */
+      --accent: #3A00E5;
+      --accent-hover: #2B00B3;
+      --accent-subtle: rgba(58, 0, 229, 0.08);
+      
+      --border-thin: rgba(15, 17, 21, 0.12);
+      --border-dark: #0F1115;
+
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+
+      --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-bounce: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      
+      --container-max: 1320px;
+      --nav-height: 80px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+    }
+
+    body {
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Selection Style */
+    ::selection {
+      background-color: var(--accent);
+      color: #FFFFFF;
+    }
+
+    /* ==========================================
+       2. TYPOGRAPHY & LAYOUT UTILITIES
+       ========================================== */
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section {
+      padding: 8rem 0;
+      position: relative;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      align-items: baseline;
+      gap: 1.5rem;
+      margin-bottom: 5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-thin);
+    }
+
+    .section-num {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    /* ==========================================
+       3. NAVBAR
+       ========================================== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--nav-height);
+      z-index: 1000;
+      background-color: rgba(247, 246, 242, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-thin);
+      transition: var(--transition-smooth);
+    }
+
+    .navbar.scrolled {
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .logo-dot {
+      width: 6px;
+      height: 6px;
+      background-color: var(--accent);
+      border-radius: 50%;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: var(--transition-smooth);
+      position: relative;
+      padding: 0.25rem 0;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-main);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: var(--accent);
+      transition: var(--transition-smooth);
+    }
+
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.75rem;
+      background-color: var(--text-main);
+      color: #FFFFFF;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 100px;
+      transition: var(--transition-smooth);
+      border: 1px solid var(--text-main);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(58, 0, 229, 0.25);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.75rem;
+      background-color: transparent;
+      color: var(--text-main);
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 100px;
+      border: 1px solid var(--border-dark);
+      transition: var(--transition-smooth);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--text-main);
+      color: #FFFFFF;
+      transform: translateY(-2px);
+    }
+
+    /* Mobile Hamburger */
+    .mobile-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      width: 28px;
+      z-index: 1001;
+    }
+
+    .mobile-toggle span {
+      width: 100%;
+      height: 2px;
+      background-color: var(--text-main);
+      transition: var(--transition-smooth);
+    }
+
+    .mobile-toggle.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+    .mobile-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .mobile-toggle.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* ==========================================
+       4. HERO SECTION
+       ========================================== */
+    .hero {
+      min-height: 100vh;
+      padding-top: calc(var(--nav-height) + 4rem);
+      padding-bottom: 6rem;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      background-color: var(--accent-subtle);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5.5vw, 5.2rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 2rem;
+    }
+
+    .hero-intro {
+      font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+      color: var(--text-muted);
+      max-width: 580px;
+      margin-bottom: 2.5rem;
+      line-height: 1.5;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+
+    .hero-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-thin);
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .hero-email a {
+      color: var(--text-muted);
+      transition: var(--transition-smooth);
+    }
+
+    .hero-email a:hover {
+      color: var(--accent);
+    }
+
+    /* Hero Abstract Visual */
+    .hero-visual {
+      position: relative;
+      height: 520px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .visual-window {
+      position: absolute;
+      background: var(--bg-card);
+      border: 1px solid var(--border-thin);
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+      transition: var(--transition-smooth);
+      overflow: hidden;
+    }
+
+    .window-header {
+      height: 36px;
+      background: #F0EEE9;
+      border-bottom: 1px solid var(--border-thin);
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #FF5F56; }
+    .dot-yellow { background: #FFBD2E; }
+    .dot-green { background: #27C93F; }
+
+    .window-main {
+      width: 380px;
+      top: 10%;
+      left: 5%;
+      z-index: 2;
+      animation: floatMain 7s ease-in-out infinite alternate;
+    }
+
+    .window-main-content {
+      padding: 1.75rem;
+    }
+
+    .code-preview {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .code-token-1 { color: var(--accent); font-weight: bold; }
+    .code-token-2 { color: #0088FF; }
+    .code-token-3 { color: #2E7D32; }
+
+    .window-secondary {
+      width: 280px;
+      bottom: 12%;
+      right: 5%;
+      z-index: 3;
+      animation: floatSecondary 8s ease-in-out infinite alternate;
+      background: #0F1115;
+      color: #FFFFFF;
+      border: none;
+    }
+
+    .window-secondary .window-header {
+      background: #1A1D24;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .window-secondary-content {
+      padding: 1.25rem;
+    }
+
+    .ui-fragment {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .ui-bar {
+      height: 8px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
+      width: 60%;
+    }
+
+    .ui-toggle {
+      width: 36px;
+      height: 20px;
+      background: var(--accent);
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .ui-toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    .geometric-shape {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(50px);
+      z-index: 1;
+      opacity: 0.6;
+    }
+
+    .shape-1 {
+      width: 240px;
+      height: 240px;
+      background: var(--accent-subtle);
+      top: 20%;
+      right: 20%;
+    }
+
+    @keyframes floatMain {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(-18px) rotate(1deg); }
+    }
+
+    @keyframes floatSecondary {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(15px) rotate(-2deg); }
+    }
+
+    /* ==========================================
+       5. ABOUT SECTION
+       ========================================== */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-large-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
+
+    .about-body p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+      line-height: 1.7;
+    }
+
+    .about-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 3rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border-thin);
+    }
+
+    .pillar-item h4 {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .pillar-item p {
+      font-size: 0.925rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ==========================================
+       6. EXPERTISE SECTION
+       ========================================== */
+    .expertise-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .expertise-item {
+      display: grid;
+      grid-template-columns: 100px 1.2fr 2fr;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border-thin);
+      align-items: baseline;
+      transition: var(--transition-smooth);
+    }
+
+    .expertise-item:first-child {
+      border-top: 1px solid var(--border-thin);
+    }
+
+    .expertise-item:hover {
+      padding-left: 1rem;
+      background-color: rgba(255,255,255,0.5);
+    }
+
+    .expertise-num {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-light);
+    }
+
+    .expertise-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .expertise-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 540px;
+    }
+
+    /* ==========================================
+       7. TECH STACK (HORIZONTAL MARQUEE)
+       ========================================== */
+    .tech-section {
+      padding: 5rem 0;
+      background: var(--text-main);
+      color: #FFFFFF;
+      overflow: hidden;
+    }
+
+    .tech-title-container {
+      margin-bottom: 3rem;
+    }
+
+    .tech-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      text-align: center;
+    }
+
+    .marquee-container {
+      display: flex;
+      overflow: hidden;
+      user-select: none;
+      gap: 2rem;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .marquee-content {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: space-around;
+      gap: 2rem;
+      min-width: 100%;
+      animation: scroll 25s linear infinite;
+    }
+
+    .tech-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 100px;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .tech-pill-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent);
+      border-radius: 50%;
+    }
+
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-100%); }
+    }
+
+    /* ==========================================
+       8. PROJECTS SECTION (DIVERSE LAYOUTS)
+       ========================================== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 2.5rem;
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-thin);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: var(--transition-smooth);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08);
+      border-color: rgba(58, 0, 229, 0.3);
+    }
+
+    .project-img-wrapper {
+      position: relative;
+      overflow: hidden;
+      background-color: var(--bg-subtle);
+    }
+
+    .project-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .project-card:hover .project-img-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .project-content {
+      padding: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .project-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .project-num {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .project-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .project-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.65rem;
+      background: var(--bg-main);
+      border-radius: 100px;
+      color: var(--text-muted);
+    }
+
+    .project-title {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .project-desc {
+      font-size: 0.975rem;
+      color: var(--text-muted);
+      margin-bottom: 1.75rem;
+      line-height: 1.6;
+    }
+
+    .btn-project {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+      transition: var(--transition-smooth);
+      align-self: flex-start;
+      margin-top: auto;
+    }
+
+    .btn-project svg {
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .btn-project {
+      color: var(--accent);
+    }
+
+    .project-card:hover .btn-project svg {
+      transform: translateX(5px);
+    }
+
+    /* Layout Variations */
+    /* Layout 1: Featured Full Width */
+    .project-card.layout-featured {
+      grid-column: span 12;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+    }
+    .project-card.layout-featured .project-img-wrapper {
+      min-height: 420px;
+    }
+    .project-card.layout-featured .project-content {
+      padding: 3.5rem;
+    }
+    .project-card.layout-featured .project-title {
+      font-size: 2.4rem;
+    }
+
+    /* Layout 2 & 3: Medium Split Cards */
+    .project-card.layout-medium {
+      grid-column: span 6;
+    }
+    .project-card.layout-medium .project-img-wrapper {
+      height: 280px;
+    }
+
+    /* Layout 4: Bento Tall Card */
+    .project-card.layout-tall {
+      grid-column: span 4;
+    }
+    .project-card.layout-tall .project-img-wrapper {
+      height: 240px;
+    }
+
+    /* Layout 5 & 6: Wide Side-by-Side */
+    .project-card.layout-wide {
+      grid-column: span 8;
+    }
+    .project-card.layout-wide .project-img-wrapper {
+      height: 300px;
+    }
+
+    /* ==========================================
+       9. PROCESS SECTION
+       ========================================== */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      position: relative;
+    }
+
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--border-thin);
+      z-index: 1;
+    }
+
+    .process-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-thin);
+      padding: 2.5rem 2rem;
+      border-radius: 16px;
+      position: relative;
+      z-index: 2;
+      transition: var(--transition-smooth);
+    }
+
+    .process-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+    }
+
+    .process-step {
+      width: 48px;
+      height: 48px;
+      background: var(--bg-main);
+      border: 1px solid var(--border-thin);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .process-title {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .process-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ==========================================
+       10. RESPONSIVE SHOWCASE
+       ========================================== */
+    .showcase-container {
+      background: #0F1115;
+      color: #FFFFFF;
+      border-radius: 32px;
+      padding: 5rem 4rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .showcase-header {
+      max-width: 600px;
+      margin-bottom: 4rem;
+    }
+
+    .showcase-header .section-num {
+      color: #8C909E;
+    }
+
+    .showcase-header h3 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .showcase-header p {
+      color: #A0A5B5;
+      font-size: 1.1rem;
+    }
+
+    .device-stage {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 2rem;
+      padding-top: 2rem;
+    }
+
+    /* Mockups */
+    .mockup-desktop {
+      width: 60%;
+      background: #1A1D24;
+      border-radius: 12px 12px 0 0;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-bottom: none;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    .mockup-header {
+      height: 28px;
+      background: #252932;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 6px;
+    }
+
+    .mockup-screen {
+      height: 280px;
+      background-size: cover;
+      background-position: top center;
+    }
+
+    .mockup-tablet {
+      width: 25%;
+      background: #1A1D24;
+      border-radius: 16px 16px 0 0;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-bottom: none;
+      padding: 10px 10px 0 10px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .mockup-tablet .mockup-screen {
+      height: 230px;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .mockup-mobile {
+      width: 15%;
+      background: #1A1D24;
+      border-radius: 16px 16px 0 0;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-bottom: none;
+      padding: 8px 8px 0 8px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    .mockup-mobile .mockup-screen {
+      height: 180px;
+      border-radius: 8px 8px 0 0;
+    }
+
+    /* ==========================================
+       11. WHY FRONTEND MATTERS (EDITORIAL PRINCIPLES)
+       ========================================== */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4rem 6rem;
+      margin-top: 3rem;
+    }
+
+    .principle-item {
+      border-top: 2px solid var(--text-main);
+      padding-top: 1.5rem;
+    }
+
+    .principle-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .principle-desc {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ==========================================
+       12. CONTACT & FORM SECTION
+       ========================================== */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 5rem;
+    }
+
+    .contact-info h3 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-info p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 480px;
+    }
+
+    .contact-direct {
+      margin-bottom: 3rem;
+    }
+
+    .contact-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-email-link {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+      font-weight: 700;
+      color: var(--text-main);
+      transition: var(--transition-smooth);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 0.2rem;
+    }
+
+    .contact-email-link:hover {
+      color: var(--accent);
+    }
+
+    /* Form Styles */
+    .contact-form {
+      background: var(--bg-card);
+      padding: 3rem;
+      border-radius: 24px;
+      border: 1px solid var(--border-thin);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.03);
+    }
+
+    .form-group {
+      margin-bottom: 1.75rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background: var(--bg-main);
+      border: 1px solid var(--border-thin);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      transition: var(--transition-smooth);
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 4px var(--accent-subtle);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    .form-status {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: none;
+    }
+
+    .form-status.success {
+      display: block;
+      background: #E8F5E9;
+      color: #2E7D32;
+      border: 1px solid #A5D6A7;
+    }
+
+    .form-status.error {
+      display: block;
+      background: #FFEBEE;
+      color: #C62828;
+      border: 1px solid #EF9A9A;
+    }
+
+    /* ==========================================
+       13. FAQ ACCORDION
+       ========================================== */
+    .faq-container {
+      max-width: 840px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border-thin);
+    }
+
+    .faq-item:first-child {
+      border-top: 1px solid var(--border-thin);
+    }
+
+    .faq-button {
+      width: 100%;
+      padding: 2rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text-main);
+      transition: var(--transition-smooth);
+    }
+
+    .faq-button:hover {
+      color: var(--accent);
+    }
+
+    .faq-icon {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      flex-shrink: 0;
+      transition: transform 0.4s ease;
+    }
+
+    .faq-icon::before, .faq-icon::after {
+      content: '';
+      position: absolute;
+      background-color: currentColor;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .faq-icon::before {
+      width: 16px;
+      height: 2px;
+    }
+
+    .faq-icon::after {
+      width: 2px;
+      height: 16px;
+      transition: transform 0.4s ease;
+    }
+
+    .faq-item.active .faq-icon::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
+    }
+
+    .faq-body {
+      padding-bottom: 2rem;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ==========================================
+       14. FINAL CTA
+       ========================================== */
+    .final-cta {
+      padding: 8rem 0;
+      background-color: var(--bg-subtle);
+      border-top: 1px solid var(--border-thin);
+      border-bottom: 1px solid var(--border-thin);
+      text-align: center;
+    }
+
+    .final-cta-content {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .final-cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .final-cta p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ==========================================
+       15. FOOTER
+       ========================================== */
+    .footer {
+      background: var(--text-main);
+      color: #FFFFFF;
+      padding: 6rem 0 3rem 0;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 4rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-brand .logo {
+      color: #FFFFFF;
+      margin-bottom: 1rem;
+    }
+
+    .footer-desc {
+      color: var(--text-light);
+      max-width: 360px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-email {
+      display: block;
+      width: fit-content;
+      margin-bottom: 0.5rem;
+      color: #FFFFFF;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: var(--transition-smooth);
+    }
+
+    .footer-email:hover {
+      color: var(--accent);
+    }
+
+    .footer-col-title {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      transition: var(--transition-smooth);
+    }
+
+    .footer-links a:hover {
+      color: #FFFFFF;
+      padding-left: 4px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 2.5rem;
+      font-size: 0.875rem;
+      color: var(--text-light);
+    }
+
+    /* Back To Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 48px;
+      height: 48px;
+      background: var(--text-main);
+      color: #FFFFFF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      z-index: 900;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-smooth);
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.9rem 1.9rem;
+      background: #25D366;
+      color: #FFFFFF;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 100px;
+      transition: var(--transition-smooth);
+    }
+
+    .btn-whatsapp:hover {
+      background: #1DA851;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(37, 211, 102, 0.3);
+    }
+
+    /* ==========================================
+       16. PROJECT MODAL
+       ========================================== */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 17, 21, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition-smooth);
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-container {
+      background: var(--bg-card);
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      border-radius: 24px;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(30px);
+      transition: var(--transition-smooth);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+    }
+
+    .modal-overlay.active .modal-container {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 40px;
+      height: 40px;
+      background: var(--bg-main);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      transition: var(--transition-smooth);
+    }
+
+    .modal-close:hover {
+      background: var(--text-main);
+      color: #FFFFFF;
+    }
+
+    .modal-img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+    }
+
+    .modal-body {
+      padding: 3rem;
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .modal-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .modal-features {
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-thin);
+    }
+
+    .modal-features h4 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-features ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+
+    .modal-features li {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .modal-features li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    /* ==========================================
+       17. RESPONSIVE BREAKPOINTS
+       ========================================== */
+    @media (max-width: 1200px) {
+      .project-card.layout-featured {
+        grid-template-columns: 1fr;
+      }
+      .project-card.layout-featured .project-img-wrapper {
+        min-height: 320px;
+      }
+      .project-card.layout-wide, .project-card.layout-tall {
+        grid-column: span 6;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .hero-visual {
+        height: 400px;
+      }
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .expertise-item {
+        grid-template-columns: 60px 1fr;
+        gap: 1rem;
+      }
+      .expertise-desc {
+        grid-column: span 2;
+        margin-top: 0.5rem;
+      }
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+      .process-grid::before {
+        display: none;
+      }
+      .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-container .btn-whatsapp span {
+        display: none;
+      }
+      .nav-container .btn-whatsapp {
+        padding: 0.65rem;
+        border-radius: 50%;
+      }
+      .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background: var(--bg-card);
+        flex-direction: column;
+        justify-content: center;
+        gap: 2rem;
+        transition: var(--transition-smooth);
+        padding: 2rem;
+      }
+
+      .nav-menu.active {
+        right: 0;
+      }
+
+      .mobile-toggle {
+        display: flex;
+      }
+
+      .nav-link {
+        font-size: 1.5rem;
+        font-family: var(--font-display);
+        font-weight: 700;
+      }
+
+      .project-card.layout-medium, 
+      .project-card.layout-tall, 
+      .project-card.layout-wide {
+        grid-column: span 12;
+      }
+
+      .principles-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .showcase-container {
+        padding: 3rem 1.5rem;
+      }
+
+      .device-stage {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .mockup-desktop, .mockup-tablet, .mockup-mobile {
+        width: 100%;
+      }
+
+      .modal-features ul {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .section {
+        padding: 5rem 0;
+      }
+      .section-header {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-top {
+        grid-template-columns: 1fr;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+      .contact-form {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">
+        UBAID<span class="logo-dot"></span>
+      </a>
+
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#expertise" class="nav-link">Expertise</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#process" class="nav-link">Process</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
+
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <a href="https://wa.me/923068933660?text=Hello%20Ubaid%2C%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project." class="btn-whatsapp" target="_blank" rel="noopener" style="padding: 0.7rem 1.4rem; font-size: 0.9rem;" aria-label="Chat on WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.92C21.95 6.45 17.5 2 12.04 2zm5.8 14.05c-.24.68-1.4 1.31-1.93 1.36-.53.05-1.02.24-3.45-.72-2.93-1.16-4.77-4.2-4.91-4.4-.14-.19-1.15-1.55-1.15-2.96 0-1.4.73-2.09 1-2.38.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.19.01.44-.07.68.53.24.6.82 2.05.9 2.2.07.14.12.31.02.5-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.14.14-.29.29-.12.58.17.29.75 1.25 1.6 2.02 1.1.98 2.02 1.29 2.31 1.43.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.79 1.95.93.29.14.48.22.55.34.07.12.07.7-.17 1.38z"/></svg>
+          <span>WhatsApp</span>
+        </a>
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <span class="hero-label">Frontend Developer</span>
+          <h1 class="hero-title">Digital Interfaces,<br>Built With Purpose.</h1>
+          <p class="hero-intro">
+            I'm Ubaid, a Frontend Developer focused on creating clean, responsive and engaging web experiences.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects" class="btn-primary">Explore Projects</a>
+            <a href="https://wa.me/923068933660?text=Hello%20Ubaid%2C%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project." class="btn-whatsapp" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.92C21.95 6.45 17.5 2 12.04 2zm5.8 14.05c-.24.68-1.4 1.31-1.93 1.36-.53.05-1.02.24-3.45-.72-2.93-1.16-4.77-4.2-4.91-4.4-.14-.19-1.15-1.55-1.15-2.96 0-1.4.73-2.09 1-2.38.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.19.01.44-.07.68.53.24.6.82 2.05.9 2.2.07.14.12.31.02.5-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.14.14-.29.29-.12.58.17.29.75 1.25 1.6 2.02 1.1.98 2.02 1.29 2.31 1.43.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.79 1.95.93.29.14.48.22.55.34.07.12.07.7-.17 1.38z"/></svg>
+              <span>Message on WhatsApp</span>
+            </a>
+            <a href="#contact" class="btn-secondary">Contact Me</a>
+          </div>
+          <div class="hero-email">
+            <span>Direct Email:</span>
+            <a href="mailto:ubaidhm38@gmail.com">ubaidhm38@gmail.com</a>
+          </div>
+          <div class="hero-email">
+            <span>Phone:</span>
+            <a href="tel:+923068933660">03068933660</a>
+          </div>
+          <div class="hero-email">
+            <span>WhatsApp:</span>
+            <a href="https://wa.me/923068933660" target="_blank" rel="noopener">+923068933660</a>
+          </div>
+        </div>
+
+        <!-- Abstract Editorial Visual -->
+        <div class="hero-visual">
+          <div class="geometric-shape shape-1"></div>
+
+          <!-- Main Floating UI Window -->
+          <div class="visual-window window-main">
+            <div class="window-header">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <div class="window-main-content">
+              <div class="code-preview">
+                <span class="code-token-1">const</span> developer = {<br>
+                &nbsp;&nbsp;name: <span class="code-token-2">'Ubaid'</span>,<br>
+                &nbsp;&nbsp;role: <span class="code-token-2">'Frontend Developer'</span>,<br>
+                &nbsp;&nbsp;focus: <span class="code-token-2">'Clean UI & Performance'</span>,<br>
+                &nbsp;&nbsp;status: <span class="code-token-3">'Available for projects'</span><br>
+                };
+              </div>
+            </div>
+          </div>
+
+          <!-- Secondary Floating UI Window -->
+          <div class="visual-window window-secondary">
+            <div class="window-header">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <div class="window-secondary-content">
+              <div class="ui-fragment">
+                <div class="ui-bar"></div>
+                <div class="ui-toggle"></div>
+              </div>
+              <div class="ui-fragment" style="margin-bottom:0;">
+                <div class="ui-bar" style="width: 80%;"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">01</span>
+        <h2 class="section-title">Building With Detail.</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-large-text">
+          Frontend development isn't just about rendering code—it's about sculpting digital space with clarity, structure and intent.
+        </div>
+        <div class="about-body">
+          <p>
+            I focus on building refined, accessible, and high-performance web applications. My approach prioritizes clean architecture, intuitive interaction patterns, and fluid responsiveness across every viewport size.
+          </p>
+          <p>
+            By bridging visual elegance with technical precision, I transform complex ideas into functional, pixel-polished frontend interfaces that deliver seamless user experiences.
+          </p>
+
+          <div class="about-pillars">
+            <div class="pillar-item">
+              <h4>Visual Consistency</h4>
+              <p>Strict adherence to spatial design systems, grid alignments, and typography scale.</p>
+            </div>
+            <div class="pillar-item">
+              <h4>Maintainable Code</h4>
+              <p>Clean, semantic, and well-structured HTML, CSS, and JS foundations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERTISE SECTION -->
+  <section class="section" id="expertise">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">02</span>
+        <h2 class="section-title">What I Do</h2>
+      </div>
+
+      <div class="expertise-list">
+        <div class="expertise-item">
+          <span class="expertise-num">01</span>
+          <h3 class="expertise-title">Responsive Web Design</h3>
+          <p class="expertise-desc">Interfaces that work smoothly across desktop, tablet and mobile environments with fluid typography and adaptive layouts.</p>
+        </div>
+
+        <div class="expertise-item">
+          <span class="expertise-num">02</span>
+          <h3 class="expertise-title">Frontend Development</h3>
+          <p class="expertise-desc">Turning complex ideas and static visual designs into interactive, high-performance, and functional web interfaces.</p>
+        </div>
+
+        <div class="expertise-item">
+          <span class="expertise-num">03</span>
+          <h3 class="expertise-title">Interactive UI</h3>
+          <p class="expertise-desc">Creating subtle motion, smooth micro-interactions, and visual feedback loops that significantly improve user engagement.</p>
+        </div>
+
+        <div class="expertise-item">
+          <span class="expertise-num">04</span>
+          <h3 class="expertise-title">UI Implementation</h3>
+          <p class="expertise-desc">Transforming design specifications into precise frontend code while keeping a strict focus on usability and semantic standards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TECHNOLOGY STACK -->
+  <section class="tech-section">
+    <div class="tech-title-container">
+      <p class="tech-title">Technology Stack</p>
+    </div>
+
+    <div class="marquee-container">
+      <div class="marquee-content">
+        <div class="tech-pill"><span class="tech-pill-dot"></span> HTML5</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> CSS3</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> JavaScript</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> React</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> Next.js</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> Tailwind CSS</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> Bootstrap</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> Git</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> GitHub</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> REST APIs</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> Responsive Design</div>
+      </div>
+      <!-- Duplicate content for infinite seamless scroll -->
+      <div class="marquee-content" aria-hidden="true">
+        <div class="tech-pill"><span class="tech-pill-dot"></span> HTML5</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> CSS3</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> JavaScript</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> React</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> Next.js</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> Tailwind CSS</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> Bootstrap</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> Git</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> GitHub</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> REST APIs</div>
+        <div class="tech-pill"><span class="tech-pill-dot"></span> Responsive Design</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS SECTION -->
+  <section class="section" id="projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Selected Work</h2>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- PROJECT 01: Featured Full-Width -->
+        <article class="project-card layout-featured">
+          <div class="project-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80" alt="Nova Commerce Interface" loading="lazy">
+          </div>
+          <div class="project-content">
+            <div>
+              <div class="project-header">
+                <span class="project-num">PROJECT 01</span>
+                <div class="project-tags">
+                  <span class="project-tag">E-Commerce</span>
+                  <span class="project-tag">UI/UX</span>
+                </div>
+              </div>
+              <h3 class="project-title">NOVA COMMERCE</h3>
+              <p class="project-desc">
+                Modern e-commerce interface concept focused on seamless product discovery, dynamic filtering, and responsive shopping experiences.
+              </p>
+            </div>
+            <button class="btn-project" onclick="openModal('nova')">
+              View Project 
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- PROJECT 02: Medium Split -->
+        <article class="project-card layout-medium">
+          <div class="project-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Flowboard Interface" loading="lazy">
+          </div>
+          <div class="project-content">
+            <div>
+              <div class="project-header">
+                <span class="project-num">PROJECT 02</span>
+                <div class="project-tags">
+                  <span class="project-tag">SaaS</span>
+                  <span class="project-tag">Dashboard</span>
+                </div>
+              </div>
+              <h3 class="project-title">FLOWBOARD</h3>
+              <p class="project-desc">
+                Modern SaaS dashboard concept focused on clean navigation, data visualization, and information hierarchy.
+              </p>
+            </div>
+            <button class="btn-project" onclick="openModal('flowboard')">
+              View Project 
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- PROJECT 03: Medium Split -->
+        <article class="project-card layout-medium">
+          <div class="project-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80" alt="Mono Space Visual" loading="lazy">
+          </div>
+          <div class="project-content">
+            <div>
+              <div class="project-header">
+                <span class="project-num">PROJECT 03</span>
+                <div class="project-tags">
+                  <span class="project-tag">Editorial</span>
+                  <span class="project-tag">Studio</span>
+                </div>
+              </div>
+              <h3 class="project-title">MONO SPACE</h3>
+              <p class="project-desc">
+                Creative studio website with bold editorial typography, minimalist grids, and immersive visual presentation.
+              </p>
+            </div>
+            <button class="btn-project" onclick="openModal('monospace')">
+              View Project 
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- PROJECT 04: Bento Tall -->
+        <article class="project-card layout-tall">
+          <div class="project-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="Roam Interface" loading="lazy">
+          </div>
+          <div class="project-content">
+            <div>
+              <div class="project-header">
+                <span class="project-num">PROJECT 04</span>
+                <div class="project-tags">
+                  <span class="project-tag">Travel</span>
+                </div>
+              </div>
+              <h3 class="project-title">ROAM</h3>
+              <p class="project-desc">
+                Travel website concept focused on destinations, exploration and visual storytelling.
+              </p>
+            </div>
+            <button class="btn-project" onclick="openModal('roam')">
+              View Project 
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- PROJECT 05: Wide Side-by-Side -->
+        <article class="project-card layout-wide">
+          <div class="project-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" alt="Forme Architecture Interface" loading="lazy">
+          </div>
+          <div class="project-content">
+            <div>
+              <div class="project-header">
+                <span class="project-num">PROJECT 05</span>
+                <div class="project-tags">
+                  <span class="project-tag">Architecture</span>
+                  <span class="project-tag">Minimal</span>
+                </div>
+              </div>
+              <h3 class="project-title">FORME</h3>
+              <p class="project-desc">
+                Modern architecture/interior website concept with minimal layouts, subtle transitions, and large imagery.
+              </p>
+            </div>
+            <button class="btn-project" onclick="openModal('forme')">
+              View Project 
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </article>
+
+        <!-- PROJECT 06: Featured Full-Width or Compact -->
+        <article class="project-card layout-featured">
+          <div class="project-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1760008486593-a85315610136?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8TW9kZXJuJTIwbGFuZGluZyUyMHBhZ2V8ZW58MHx8MHx8fDA%3D" alt="Pulse Landing Page" loading="lazy">
+          </div>
+          <div class="project-content">
+            <div>
+              <div class="project-header">
+                <span class="project-num">PROJECT 06</span>
+                <div class="project-tags">
+                  <span class="project-tag">Landing Page</span>
+                  <span class="project-tag">Interactive</span>
+                </div>
+              </div>
+              <h3 class="project-title">PULSE</h3>
+              <p class="project-desc">
+                Modern landing page concept focused on clear messaging, micro-interactions and conversion-oriented UI patterns.
+              </p>
+            </div>
+            <button class="btn-project" onclick="openModal('pulse')">
+              View Project 
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS SECTION -->
+  <section class="section" id="process">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">04</span>
+        <h2 class="section-title">From Idea To Interface</h2>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-card">
+          <div class="process-step">01</div>
+          <h3 class="process-title">Discover</h3>
+          <p class="process-desc">Understand the primary idea, structural requirements, and core user experience objectives.</p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-step">02</div>
+          <h3 class="process-title">Plan</h3>
+          <p class="process-desc">Structure the content hierarchy, navigation flows, and layout systems for optimal clarity.</p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-step">03</div>
+          <h3 class="process-title">Build</h3>
+          <p class="process-desc">Develop clean, modular, and responsive frontend code utilizing modern CSS and JavaScript.</p>
+        </div>
+
+        <div class="process-card">
+          <div class="process-step">04</div>
+          <h3 class="process-title">Refine</h3>
+          <p class="process-desc">Polish interactions, cross-device responsiveness, performance, and accessibility details.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESPONSIVE SHOWCASE -->
+  <section class="section">
+    <div class="container">
+      <div class="showcase-container">
+        <div class="showcase-header">
+          <span class="section-num">ADAPTIVE SYSTEM</span>
+          <h3>Designed For Every Screen</h3>
+          <p>Responsive experiences that remain clear, functional and visually consistent across desktop, tablet, and mobile devices.</p>
+        </div>
+
+        <div class="device-stage">
+          <!-- Desktop Mockup -->
+          <div class="mockup-desktop">
+            <div class="mockup-header">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <div class="mockup-screen" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80');"></div>
+          </div>
+
+          <!-- Tablet Mockup -->
+          <div class="mockup-tablet">
+            <div class="mockup-screen" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=500&q=80');"></div>
+          </div>
+
+          <!-- Mobile Mockup -->
+          <div class="mockup-mobile">
+            <div class="mockup-screen" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=300&q=80');"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY FRONTEND MATTERS -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+
+        <h2 class="section-title">Good Interfaces Make Technology Feel Simple.</h2>
+      </div>
+
+      <div class="principles-grid">
+        <div class="principle-item">
+          <h3 class="principle-title">Clarity</h3>
+          <p class="principle-desc">Removing non-essential noise to highlight primary content and direct user focus with precision and clear typographic hierarchy.</p>
+        </div>
+
+        <div class="principle-item">
+          <h3 class="principle-title">Performance</h3>
+          <p class="principle-desc">Optimizing layout rendering, light assets, and lean scripts to ensure rapid load times and fluid interaction speeds.</p>
+        </div>
+
+        <div class="principle-item">
+          <h3 class="principle-title">Responsiveness</h3>
+          <p class="principle-desc">Building layout engines that gracefully adapt to device screen sizes without breaking visual harmony or functional layout.</p>
+        </div>
+
+        <div class="principle-item">
+          <h3 class="principle-title">Consistency</h3>
+          <p class="principle-desc">Maintaining unified design tokens, spacing scales, button behaviors, and interaction feedback patterns throughout.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="faq-container">
+        <div class="faq-item">
+          <button class="faq-button">
+            <span>What type of websites do you build?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-content">
+            <div class="faq-body">
+              I build custom frontend solutions ranging from clean studio portfolios, SaaS marketing websites, landing pages, to modern responsive interfaces for web applications.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-button">
+            <span>Do you create responsive websites?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-content">
+            <div class="faq-body">
+              Yes, every interface I develop is fully responsive and tested across mobile, tablet, and desktop viewports to ensure seamless user experiences.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-button">
+            <span>Which frontend technologies do you use?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-content">
+            <div class="faq-body">
+              I specialize in HTML5, CSS3, JavaScript (ES6+), React, Next.js, and utility frameworks like Tailwind CSS and Bootstrap.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-button">
+            <span>Can you work from an existing design?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-content">
+            <div class="faq-body">
+              Absolutely. I can translate visual design files (Figma, Adobe XD) into high-fidelity, interactive, and responsive frontend code.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-button">
+            <span>How can I contact you?</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-content">
+            <div class="faq-body">
+              You can get in touch directly via email at <a href="mailto:ubaidhm38@gmail.com" style="color: var(--accent); font-weight: 600;">ubaidhm38@gmail.com</a> or use the contact form below.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-num">05</span>
+        <h2 class="section-title">Let's Create Something.</h2>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Have a website idea or frontend project in mind?</h3>
+          <p>Let's start a conversation about bringing your visual concepts into functional digital reality.</p>
+
+          <div class="contact-direct">
+            <p class="contact-label">Direct Contact</p>
+            <a href="mailto:ubaidhm38@gmail.com" class="contact-email-link">ubaidhm38@gmail.com</a>
+            <p style="margin-top: 1.5rem; margin-bottom: 0.5rem; font-size: 1.05rem; font-weight: 600;">
+              Phone: <a href="tel:+923068933660" style="color: var(--accent);">03068933660</a>
+            </p>
+            <p style="margin-bottom: 0; font-size: 1.05rem; font-weight: 600;">
+              WhatsApp: <a href="https://wa.me/923068933660" style="color: var(--accent);" target="_blank" rel="noopener">+923068933660</a>
+            </p>
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+            <a href="https://wa.me/923068933660?text=Hello%20Ubaid%2C%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project." class="btn-whatsapp" style="padding: 1rem 2.25rem;" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.92C21.95 6.45 17.5 2 12.04 2zm5.8 14.05c-.24.68-1.4 1.31-1.93 1.36-.53.05-1.02.24-3.45-.72-2.93-1.16-4.77-4.2-4.91-4.4-.14-.19-1.15-1.55-1.15-2.96 0-1.4.73-2.09 1-2.38.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.19.01.44-.07.68.53.24.6.82 2.05.9 2.2.07.14.12.31.02.5-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.14.14-.29.29-.12.58.17.29.75 1.25 1.6 2.02 1.1.98 2.02 1.29 2.31 1.43.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.79 1.95.93.29.14.48.22.55.34.07.12.07.7-.17 1.38z"/></svg>
+              <span>WhatsApp Ubaid</span>
+            </a>
+            <a href="mailto:ubaidhm38@gmail.com" class="btn-secondary" style="padding: 1rem 2.25rem;">Email Ubaid</a>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <form class="contact-form" id="contact-form" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" class="form-input" placeholder="Your Name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-input" placeholder="your.email@example.com" required>
+          </div>
+
+          <div class="form-group">
+            <label for="project-type" class="form-label">Project Type</label>
+            <select id="project-type" class="form-select" required>
+              <option value="" disabled selected>Select project type</option>
+              <option value="frontend">Frontend Development</option>
+              <option value="redesign">Website Redesign</option>
+              <option value="landing">Landing Page</option>
+              <option value="other">Other Inquiry</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="form-label">Message</label>
+            <textarea id="message" class="form-textarea" placeholder="Tell me about your project..." required></textarea>
+          </div>
+
+          <button type="submit" class="btn-whatsapp" style="width: 100%;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.92C21.95 6.45 17.5 2 12.04 2zm5.8 14.05c-.24.68-1.4 1.31-1.93 1.36-.53.05-1.02.24-3.45-.72-2.93-1.16-4.77-4.2-4.91-4.4-.14-.19-1.15-1.55-1.15-2.96 0-1.4.73-2.09 1-2.38.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.19.01.44-.07.68.53.24.6.82 2.05.9 2.2.07.14.12.31.02.5-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.14.14-.29.29-.12.58.17.29.75 1.25 1.6 2.02 1.1.98 2.02 1.29 2.31 1.43.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.79 1.95.93.29.14.48.22.55.34.07.12.07.7-.17 1.38z"/></svg>
+            <span>Send via WhatsApp</span>
+          </button>
+
+          <div class="form-status" id="form-status"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <div class="container">
+      <div class="final-cta-content">
+        <h2>Let's Build Something Worth Visiting.</h2>
+        <p>Modern frontend development with attention to structure, interaction and detail.</p>
+        <a href="https://wa.me/923068933660?text=Hello%20Ubaid%2C%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project." class="btn-whatsapp" style="padding: 1.1rem 2.5rem; font-size: 1rem;" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.92C21.95 6.45 17.5 2 12.04 2zm5.8 14.05c-.24.68-1.4 1.31-1.93 1.36-.53.05-1.02.24-3.45-.72-2.93-1.16-4.77-4.2-4.91-4.4-.14-.19-1.15-1.55-1.15-2.96 0-1.4.73-2.09 1-2.38.26-.29.58-.36.77-.36.19 0 .39 0 .55.01.19.01.44-.07.68.53.24.6.82 2.05.9 2.2.07.14.12.31.02.5-.1.19-.15.31-.29.48-.15.17-.31.38-.44.51-.14.14-.29.29-.12.58.17.29.75 1.25 1.6 2.02 1.1.98 2.02 1.29 2.31 1.43.29.14.46.12.63-.07.17-.19.72-.85.92-1.14.19-.29.39-.24.65-.14.26.09 1.66.79 1.95.93.29.14.48.22.55.34.07.12.07.7-.17 1.38z"/></svg>
+          <span>Start a Conversation</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="logo">
+            UBAID<span class="logo-dot"></span>
+          </a>
+          <p style="font-weight: 600; color: #FFFFFF; margin-bottom: 0.5rem;">Ubaid — Frontend Developer</p>
+          <p class="footer-desc">
+            Focused on building clean, responsive and engaging digital experiences.
+          </p>
+          <a href="mailto:ubaidhm38@gmail.com" class="footer-email">ubaidhm38@gmail.com</a>
+          <a href="tel:+923068933660" class="footer-email">03068933660</a>
+          <a href="https://wa.me/923068933660" class="footer-email" target="_blank" rel="noopener">WhatsApp: +923068933660</a>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#expertise">Expertise</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#process">Process</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Location</h4>
+          <p style="color: var(--text-light); font-size: 0.95rem; line-height: 1.6;">
+            Available globally for remote frontend projects and digital collaborations.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Ubaid. All rights reserved.</p>
+        <p>Crafted with HTML5, CSS3 & JavaScript</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to Top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+
+  <!-- PROJECT MODAL -->
+  <div class="modal-overlay" id="project-modal" onclick="closeModalOnOutside(event)">
+    <div class="modal-container">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <img id="modal-img" src="" alt="Project Preview" class="modal-img">
+      <div class="modal-body">
+        <h3 id="modal-title" class="modal-title"></h3>
+        <p id="modal-desc" class="modal-desc"></p>
+        
+        <div class="project-tags" id="modal-tags" style="margin-bottom: 1.5rem;"></div>
+
+        <div class="modal-features">
+          <h4>Key Frontend Features</h4>
+          <ul id="modal-features-list">
+            <li>Responsive grid layout system</li>
+            <li>Smooth interaction state management</li>
+            <li>Cross-browser rendering support</li>
+            <li>Semantic HTML & accessibility focus</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Project Data Object for Modal
+    const projectsData = {
+      nova: {
+        title: "NOVA COMMERCE",
+        desc: "A modern e-commerce interface designed specifically for fast product discovery. Featuring dynamic product filtering, responsive cart preview drawers, and optimized layout systems.",
+        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+        tags: ["HTML5", "CSS3", "JavaScript", "E-Commerce", "Responsive UI"],
+        features: ["Dynamic category filters", "Responsive product gallery", "Slide-out cart drawer", "Mobile-optimized Checkout flow"]
+      },
+      flowboard: {
+        title: "FLOWBOARD",
+        desc: "Modern SaaS dashboard concept designed for clear information hierarchy. Focuses on data density, clean typography, adaptive sidebars, and customizable widget components.",
+        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+        tags: ["JavaScript", "CSS Grid", "Dashboard", "SaaS", "UI Patterns"],
+        features: ["Collapsible sidebar navigation", "Interactive data chart placeholders", "Light/Dark state toggle concept", "Custom data tables"]
+      },
+      monospace: {
+        title: "MONO SPACE",
+        desc: "Creative studio website featuring bold editorial layout structures, immersive portfolio galleries, oversized typography scales, and minimal visual noise.",
+        image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1200&q=80",
+        tags: ["Editorial UI", "CSS3 Motion", "JavaScript", "Minimal"],
+        features: ["Asymmetric grid structures", "Custom cursor hover interactions", "Smooth section transitions", "Minimal design aesthetic"]
+      },
+      roam: {
+        title: "ROAM",
+        desc: "Travel exploration platform visual layout built around high-impact destination imagery, interactive itinerary cards, and fluid grid transitions.",
+        image: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80",
+        tags: ["HTML5", "Responsive CSS", "Travel UI"],
+        features: ["Interactive location previews", "Filterable travel categories", "Full-screen media overlays", "Touch-friendly swipe cards"]
+      },
+      forme: {
+        title: "FORME",
+        desc: "Architecture and interior design showcases prioritizing minimal whitespace layout systems, clean architectural lines, and subtle hover states.",
+        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+        tags: ["Architecture", "CSS Grid", "Vanilla JS"],
+        features: ["High-resolution image modal", "Architectural project filter", "Clean whitespace layout", "Fluid typography scaling"]
+      },
+      pulse: {
+        title: "PULSE",
+        desc: "High-conversion landing page design constructed with clear typography focus, structured benefit sections, dynamic FAQ toggles, and conversion call-to-actions.",
+        image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80",
+        tags: ["Landing Page", "Interactive", "Micro-interactions"],
+        features: ["Conversion-focused layout", "Interactive accordion UI", "Sticky CTA navigation", "Subtle scroll animation triggers"]
+      }
+    };
+
+    // Navbar Scroll & Active State
+    const navbar = document.getElementById('navbar');
+    const backToTop = document.getElementById('back-to-top');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('section, header');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+        backToTop.classList.add('visible');
+      } else {
+        navbar.classList.remove('scrolled');
+        backToTop.classList.remove('visible');
+      }
+
+      // Active Nav Link on Scroll
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (pageYOffset >= (sectionTop - 150)) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Mobile Navigation Toggle
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const navMenu = document.getElementById('nav-menu');
+
+    mobileToggle.addEventListener('click', () => {
+      mobileToggle.classList.toggle('active');
+      navMenu.classList.toggle('active');
+    });
+
+    // Close Mobile Menu when clicking a link
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileToggle.classList.remove('active');
+        navMenu.classList.remove('active');
+      });
+    });
+
+    // Back to top scroll
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // FAQ Accordion Toggle
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const button = item.querySelector('.faq-button');
+      const content = item.querySelector('.faq-content');
+
+      button.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+
+        // Close all items
+        faqItems.forEach(otherItem => {
+          otherItem.classList.remove('active');
+          otherItem.querySelector('.faq-content').style.maxHeight = null;
+        });
+
+        // Open clicked item if it was not active
+        if (!isActive) {
+          item.classList.add('active');
+          content.style.maxHeight = content.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // Project Modal System
+    const modalOverlay = document.getElementById('project-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-desc');
+    const modalImg = document.getElementById('modal-img');
+    const modalTags = document.getElementById('modal-tags');
+    const modalFeaturesList = document.getElementById('modal-features-list');
+
+    function openModal(projectId) {
+      const project = projectsData[projectId];
+      if (!project) return;
+
+      modalTitle.textContent = project.title;
+      modalDesc.textContent = project.desc;
+      modalImg.src = project.image;
+      modalImg.alt = project.title;
+
+      // Render Tags
+      modalTags.innerHTML = project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('');
+
+      // Render Features
+      modalFeaturesList.innerHTML = project.features.map(feat => `<li>${feat}</li>`).join('');
+
+      modalOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modalOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function closeModalOnOutside(e) {
+      if (e.target === modalOverlay) {
+        closeModal();
+      }
+    }
+
+    // Escape Key Listener for Modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // Contact Form: validate and forward the inquiry to WhatsApp
+    const WHATSAPP_NUMBER = '923068933660';
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const projectType = document.getElementById('project-type');
+      const message = document.getElementById('message').value.trim();
+      const status = document.getElementById('form-status');
+
+      if (!name || !email || !projectType.value || !message) {
+        status.className = 'form-status error';
+        status.textContent = 'Please fill out all required fields before submitting.';
+        return;
+      }
+
+      const projectLabel = projectType.options[projectType.selectedIndex].text;
+      const text = `New Project Inquiry\n\nName: ${name}\nEmail: ${email}\nProject Type: ${projectLabel}\n\nMessage:\n${message}`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+
+      status.className = 'form-status success';
+      status.textContent = 'Opening WhatsApp with your inquiry. Thank you for reaching out!';
+      document.getElementById('contact-form').reset();
+    }
+  </script>
+</body>
+</html>
